@@ -9,7 +9,7 @@
 <body>
 	<h2>게시판 글쓰기</h2>
 	<hr>
-	<table border="1" cellspacing = "0" cellpadding="0" width="500">
+	<table border="1" cellspacing="0" cellpadding="0" width="500">
 		<form action="write">
 			<tr>
 				<td>이 름</td>
@@ -26,11 +26,10 @@
 			<tr>
 				<td colspan="2" align="right">
 					<input type="submit" value="글입력">&nbsp;&nbsp;&nbsp;
-					<input type="button" value="글목록" onclick="script:window.location.href='list'">
-				</td>
+					<input type="button" value="글목록" onclick="script:window.location.href='list'">				
+				</td>				
 			</tr>
-			
-		</form>
+		</form>	
 	</table>
 </body>
 </html>
