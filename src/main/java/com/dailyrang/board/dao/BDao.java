@@ -68,7 +68,7 @@ public class BDao {
 		
 		ArrayList<BDto> dtos = new ArrayList<BDto>();
 		
-		String sql = "SELECT * FROM mvc_board ORDER BY bid DESC";
+		String sql = "SELECT * FROM mvc_board ORDER BY bgroup DESC, bstep ASC";
 		
 		try {
 			conn = dataSource.getConnection();
@@ -118,6 +118,8 @@ public class BDao {
 	}
 	
 	public BDto content_view(String boardId) {
+		
+		upHit(boardId);//조회수 증가 메서드 호출
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -188,6 +190,107 @@ public class BDao {
 			pstmt.setString(2, btitle);
 			pstmt.setString(3, bcontent);
 			pstmt.setString(4, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void delete(String bid) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "DELETE FROM mvc_board WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void upHit(String bid) {//호출 시 조회수(bhit) 1씩 증가해주는 메서드
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "UPDATE mvc_board SET bhit=bhit+1 WHERE bid=?";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, bid);
+			
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void reply(String bid, String bname, String btitle, String bcontent, String bgroup, String bstep, String bindent) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "INSERT INTO mvc_board (bid, bname, btitle, bcontent, bhit, bgroup, bstep, bindent) VALUES (mvc_board_seq.nextval, ?, ?, ?, 0, ?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bname);
+			pstmt.setString(2, btitle);
+			pstmt.setString(3, bcontent);
+			pstmt.setString(4, bgroup);
+			pstmt.setInt(5, Integer.parseInt(bstep)+1);
+			pstmt.setInt(6, Integer.parseInt(bindent)+1);
+			
 			
 			pstmt.executeUpdate();
 			

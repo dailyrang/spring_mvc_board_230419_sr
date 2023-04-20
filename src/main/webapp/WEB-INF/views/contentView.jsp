@@ -40,6 +40,7 @@
 				<input type="button" value="삭제" onclick="script:window.location.href='delete?bid=${content.bid }'">
 				<input type="button" value="글목록" onclick="script:window.location.href='list'">
 				<input type="button" value="글쓰기" onclick="script:window.location.href='write_form'">
+				<input type="button" value="답변" onclick="script:window.location.href='reply_form?bid=${content.bid }'">
 			</td>
 		</tr>
 	</table>
