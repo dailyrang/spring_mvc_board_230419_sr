@@ -31,7 +31,7 @@ public class BDao {
 		
 		try {
 			conn = dataSource.getConnection();
-			String sql = "INSERT INTO mvc_board (bid,bname,btitle,bhit,bgroup,bstep,bindent) VALUES(mvc_board_seq.nextval,?,?,?,0,mvc_board_seq.currval,0,0)";
+			String sql = "INSERT INTO mvc_board (bid,bname,btitle,bcontent,bhit,bgroup,bstep,bindent) VALUES(mvc_board_seq.nextval,?,?,?,0,mvc_board_seq.currval,0,0)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, bname);
@@ -39,9 +39,9 @@ public class BDao {
 			pstmt.setString(3, bcontent);
 			
 			pstmt.executeUpdate();
-			
+			// System.out.println("sql실행!");
 		} catch (Exception e) {
-			
+			 e.printStackTrace();
 		} finally {
 		 try {
 			 if(pstmt != null) {
